@@ -8,8 +8,9 @@ from langchain_core.prompts import PromptTemplate
 from langchain_huggingface import HuggingFaceEndpoint
 
 DB_FAISS_PATH = "vectorstore/db_faiss"
-
+#cacher la ressource  retourner par fct et le stocker en memoire 
 @st.cache_resource
+#chargement du model 
 def get_vectorstore():
     embedding_model = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
     db = FAISS.load_local(DB_FAISS_PATH, embedding_model, allow_dangerous_deserialization=True)
@@ -17,7 +18,7 @@ def get_vectorstore():
 
 def set_custom_prompt(custom_prompt_template):
     return PromptTemplate(template=custom_prompt_template, input_variables=["context", "question"])
-
+#charger le model de generation du text 
 def load_llm(huggingface_repo_id, HF_TOKEN):
     return HuggingFaceEndpoint(
         repo_id=huggingface_repo_id,
@@ -28,10 +29,13 @@ def load_llm(huggingface_repo_id, HF_TOKEN):
 def main():
     st.title("🧠 Medical Chatbot")
 
+    # stocker dans st les meg entre uder et assistant pour garder un historique
+
     if 'messages' not in st.session_state:
         st.session_state.messages = []
 
     for message in st.session_state.messages:
+        #que ca soit le msg de user ou lassistant  il va etre afficher dans markdown  
         st.chat_message(message['role']).markdown(message['content'])
 
     prompt = st.chat_input("❓ Posez votre question ici")
@@ -55,11 +59,13 @@ def main():
         HF_TOKEN = os.environ.get("HF_TOKEN")
 
         try:
+            #charger la base de donnee 
             vectorstore = get_vectorstore()
             if vectorstore is None:
                 st.error("❌ Failed to load the vector store.")
                 return
-
+            
+            #LANGCHAIN 
             qa_chain = RetrievalQA.from_chain_type(
                 llm=load_llm(HUGGINGFACE_REPO_ID, HF_TOKEN),
                 chain_type="stuff",
