@@ -7,3 +7,6 @@
 #faiss-cpu un biblio pour la recherche rapide des vecteur 
 #huggingface pour acceder aux models de NLP
 #streamlit pour la creaction des app web interactives 
+#model_name="BAAI/bge-small-en
+#Ce modèle est destiné à la transformation de texte en vecteurs denses dans un espace vectoriel
+#mistralai/Mistral-7B-Instruct-v0.3: Ce modèle est capable de répondre aux questions
