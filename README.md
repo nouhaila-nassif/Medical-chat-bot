@@ -1,3 +1,9 @@
+🤖 Projet : Chatbot médical intelligent
+🖥️ Frontend : Streamlit pour une interface web simple et interactive
+🧠 Backend : Modèles Hugging Face pour comprendre et répondre aux questions médicales
+🎯 Objectif : fournir des réponses fiables et rapides aux utilisateurs sur des sujets de santé
+
+
 #pip install pipenv
 #gestionnaire de paquet spy py qui simplifie la gestion des dep et des envi
 #les paquetet dependances  qui sont installer avec 
